@@ -4,7 +4,38 @@ import './App.css';
 function App() {
   return (
     <div className="App">
+
       <div className="wrapper clear">
+
+        {/*Drawer or (Right side)*/}
+        <div className="overlay">
+          <div className="drawer">
+              <h2 className="mb-30">Cart</h2>
+              <div className="cartItem d-flex align-center justify-between mb-20">
+               <img className="mr-20" width={70} heigth={70} src="img/sneakers/1.jpg" alt="Sneakers" />
+                <div className="mr-20">
+                  <p className="mb-5">Here will be the descriptionof the sneakers </p>
+                  <b>Price: EUR20.00</b>
+               </div>
+              <button className="removeBtn">
+                <img  src="img/btn-remove.svg" alt="Remove"/>
+              </button>
+              </div>
+
+              <div className="cartItem d-flex align-center justify-between mb-20">
+               <img className="mr-20" width={70} heigth={70} src="img/sneakers/2.jpg" alt="Sneakers" />
+                <div className="mr-20">
+                  <p className="mb-5">Here will be the descriptionof the sneakers </p>
+                  <b>Price: EUR20.00</b>
+               </div>
+              <button className="removeBtn">
+                <img  src="img/btn-remove.svg" alt="Remove"/>
+              </button>
+              </div>
+          </div>
+        </div>
+        
+
         <header className='d-flex justify-between align-center p-40'>
           <div className="headerLeft d-flex">
             <img width={40} height={40} src="img/logo.png" alt="logo"/>
