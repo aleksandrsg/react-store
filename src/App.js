@@ -23,6 +23,9 @@ function App() {
               </li>
             </ul>
         </header>
+
+      {/* Content*/}
+
         <div className="content p-40">
           <div className="d-flex justify-between align-center mb-40"> 
             <h1>All Sneakers</h1>
@@ -33,9 +36,13 @@ function App() {
           </div>
           
 
+          {/* Product Cards*/ }
 
           <div className="d-flex">
           <div className="card">
+            <div className="favorite">
+             <img src="img/unliked.svg" alt="unliked" />
+            </div>
             <img width={133} heigth={112} src="img/sneakers/1.jpg" alt="Sneakers" />
             <h5>Man's sneakers Nike Blazer Mid Suede</h5>
             <div className='d-flex justify-between align-center'>
