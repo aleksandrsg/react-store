@@ -1,4 +1,8 @@
 
+// * All elements will be with parametrs as default 
+* {
+  font-family:'Inter', system-ui;
+}
 
 body {
   margin: 0;
@@ -67,4 +71,19 @@ header {
   height: 32px;
   width: 32px;
   cursor: pointer;
+}
+
+// Search field
+
+.search-block{
+  border: 1px solid #f3f3f3;
+  border-radius: 10px;
+  padding: 0px 15px;
+
+  input {
+    border: 0;
+    padding: 13px;
+    font-size: 16px;
+    width: 250px;
+    }
 }
