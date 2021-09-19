@@ -3,7 +3,7 @@ import React from 'react';
 const Header = () => {
     return (
         <header className='d-flex justify-between align-center p-40'>
-          <div className="headerLeft d-flex">
+          <div className="d-flex headerLeft">
             <img width={40} height={40} src="img/logo.png" alt="logo"/>
             <div>
               <h3 className="text-uppercase">React Sneakers</h3>

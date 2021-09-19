@@ -1,8 +1,13 @@
 import React from 'react';
 
+import styles from './Card.module.scss';
+
 const Card = (props) =>{
     return (
-        <div className="card">
+        <div className={styles.card}>
+            <div className={styles.favorite}>
+                <img src="img/liked.svg" alt="liked" />
+            </div>
             <img width={133} heigth={112} src={props.img} alt="Sneakers" />
             <h5>{props.title}</h5>
             <div className='d-flex justify-between align-center'>
