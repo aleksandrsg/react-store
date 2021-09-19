@@ -1,8 +1,10 @@
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Card from './components/Card/';
 import Header from './components/Header';
 import Drawer from './components/Drawer';
+
 
 const arr =[
 { name: "Man's sneakers Nike Blazer Mid Suede", price: 20.00, img:"img/sneakers/1.jpg"},
@@ -12,12 +14,23 @@ const arr =[
 ];
 
 function App() {
+
+  const [cartIsOpened, setcartIsOpened] =React.useState(false);
+
+  const onClickCart = () => {
+    setcartIsOpened(true);
+  }
+
+  const onCloseCart = () => {
+    setcartIsOpened(false);
+  }
+
   return (
     <div className="App">
       <div className="wrapper clear">
         {/*Drawer or (Right side)*/}
-      <Drawer />
-      <Header />
+      {cartIsOpened ? <Drawer onCloseCart={onCloseCart}/> : null}
+      <Header onClickCart={onClickCart}/>
       {/* Content*/}
         <div className="content p-40">
           <div className="d-flex justify-between align-center mb-40"> 
