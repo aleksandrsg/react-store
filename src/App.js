@@ -6,8 +6,13 @@ import Header from './components/Header';
 import Drawer from './components/Drawer';
 
 function App() {
-
+  //State for All items
   const[items, setItems]= React.useState([]);
+  //State for items added to Cart
+  const [cartItems, setCartItems] = React.useState([
+    //{"name":"Mans sneakers Adidas A","price":110,"img":"/img/sneakers/1.jpg"},
+    //{"name":"Mans sneakers Adidas B","price":120,"img":"/img/sneakers/2.jpg"}
+  ]);
 
   const [cartIsOpened, setcartIsOpened] =React.useState(false);
 
@@ -19,17 +24,23 @@ function App() {
     setcartIsOpened(false);
   }
 
+  React.useEffect( ()=>{
   fetch('https://614a2ed907549f001755a83e.mockapi.io/allitems')
-  .then((res) => {return res.json();
-  })
-  .then((json) => {setItems(json);
-  });
+    .then((res) => {return res.json();
+    })
+    .then((json) => {setItems(json);
+    });
+  },[]);
 
+  const onAddToCart = (obj) => {
+    setCartItems([...cartItems, obj])
+  }
+  
   return (
     <div className="App">
       <div className="wrapper clear">
         {/*Drawer or (Right side)*/}
-      {cartIsOpened ? <Drawer onCloseCart={onCloseCart}/> : null}
+      {cartIsOpened ? <Drawer onCloseCart={onCloseCart} cartItems={cartItems}/> : null}
       <Header onClickCart={onClickCart}/>
       {/* Content*/}
         <div className="content p-40">
@@ -45,15 +56,15 @@ function App() {
           {/* Product Cards*/ }
 
           <div className="d-flex flex-wrap"> 
-          {items.map(obj =>(
+          {items.map(item =>(
             <Card 
-            title={obj.name} 
-            price={obj.price} 
-            img={obj.img}
+            title={item.name} 
+            price={item.price} 
+            img={item.img}
             onFavorite={() => alert('Added to Favorite')}
-            onPlus= {() => alert('Item added to Cart')}
+            onPlus = {(obj) => onAddToCart(obj)}
             />
-          ))}       
+          ))}
           </div>
         </div>
       </div>
