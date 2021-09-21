@@ -5,15 +5,9 @@ import Card from './components/Card/';
 import Header from './components/Header';
 import Drawer from './components/Drawer';
 
-
-const arr =[
-{ name: "Man's sneakers Nike Blazer Mid Suede", price: 20.00, img:"img/sneakers/1.jpg"},
-{ name: "Man's sneakers Puma Rock star", price: 25.00, img:"img/sneakers/2.jpg"},
-{ name: "Man's sneakers Adidas Super", price: 30.00, img:"img/sneakers/3.jpg"},
-{ name: "Man's sneakers Adidas Hip Hop", price: 35.00, img:"img/sneakers/4.jpg"}
-];
-
 function App() {
+
+  const[items, setItems]= React.useState([]);
 
   const [cartIsOpened, setcartIsOpened] =React.useState(false);
 
@@ -24,6 +18,12 @@ function App() {
   const onCloseCart = () => {
     setcartIsOpened(false);
   }
+
+  fetch('https://614a2ed907549f001755a83e.mockapi.io/allitems')
+  .then((res) => {return res.json();
+  })
+  .then((json) => {setItems(json);
+  });
 
   return (
     <div className="App">
@@ -44,8 +44,8 @@ function App() {
 
           {/* Product Cards*/ }
 
-          <div className="d-flex"> 
-          {arr.map(obj =>(
+          <div className="d-flex flex-wrap"> 
+          {items.map(obj =>(
             <Card 
             title={obj.name} 
             price={obj.price} 
