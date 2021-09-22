@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Card from './components/Card/';
 import Header from './components/Header';
@@ -15,6 +14,8 @@ function App() {
   ]);
 
   const [cartIsOpened, setcartIsOpened] =React.useState(false);
+
+  const [searchText, setSearchText] = React.useState(''); 
 
   const onClickCart = () => {
     setcartIsOpened(true);
@@ -35,6 +36,14 @@ function App() {
   const onAddToCart = (obj) => {
     setCartItems([...cartItems, obj])
   }
+  //Set Search Text
+  const onChangeSearchInput = (event) =>{
+    setSearchText(event.target.value);
+  }
+  //Clear Search Input
+  const clearSearchText = () => {
+    setSearchText('');
+  }
   
   return (
     <div className="App">
@@ -45,19 +54,23 @@ function App() {
       {/* Content*/}
         <div className="content p-40">
           <div className="d-flex justify-between align-center mb-40"> 
-            <h1>All Sneakers</h1>
+            <h1>{searchText ? `Search request: "${searchText}"` : 'All sneakers' }</h1>
             <div className="search-block d-flex align-center">
               <img src="img/search.svg" alt="Search" />
-              <input type="text" placeholder="Search sneakers"/>
+              {searchText && <img className="cu-p clear" src="img/btn-remove.svg" alt="ClearSearch" onClick={clearSearchText}/>}
+              <input onChange={onChangeSearchInput} value={searchText} type="text" placeholder="Search sneakers"/>
             </div>
           </div>
           
 
           {/* Product Cards*/ }
 
-          <div className="d-flex flex-wrap"> 
-          {items.map(item =>(
+          <div className="d-flex flex-wrap">
+          {items
+          .filter(item => item.name.toLowerCase().includes(searchText.toLowerCase()))
+          .map((item, index) =>(
             <Card 
+            key={index} // if use map MAP method for items, each item should have uniq KEY
             title={item.name} 
             price={item.price} 
             img={item.img}
