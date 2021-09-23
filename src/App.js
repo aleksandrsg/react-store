@@ -35,12 +35,22 @@ function App() {
   //npm install axios instead of .fetch() to get data from mockapi backend server
  axios.get('https://614a2ed907549f001755a83e.mockapi.io/allitems')
  .then(response => {setItems(response.data)})
-
+ axios.get('https://614a2ed907549f001755a83e.mockapi.io/cart')
+ .then(response => {setCartItems(response.data)})
   },[]);
 
+  // Add item to Cart and to Server
   const onAddToCart = (obj) => {
-    setCartItems([...cartItems, obj])
+    axios.post('https://614a2ed907549f001755a83e.mockapi.io/cart', obj)
+    setCartItems(prev =>[...prev, obj])
   }
+
+  // Removeitem from Cart and Server
+  const removeItem = (id) =>{
+    axios.delete(`https://614a2ed907549f001755a83e.mockapi.io/cart/${id}`)
+    setCartItems((prev) => prev.filter(item => item.id !== id))
+  }
+
   //Set Search Text
   const onChangeSearchInput = (event) =>{
     setSearchText(event.target.value);
@@ -54,7 +64,7 @@ function App() {
     <div className="App">
       <div className="wrapper clear">
         {/*Drawer or (Right side)*/}
-      {cartIsOpened ? <Drawer onCloseCart={onCloseCart} cartItems={cartItems}/> : null}
+      {cartIsOpened ? <Drawer onCloseCart={onCloseCart} cartItems={cartItems} onRemove={removeItem}/> : null}
       <Header onClickCart={onClickCart}/>
       {/* Content*/}
         <div className="content p-40">
