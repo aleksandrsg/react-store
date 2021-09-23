@@ -3,6 +3,7 @@ import './App.css';
 import Card from './components/Card/';
 import Header from './components/Header';
 import Drawer from './components/Drawer';
+import axios from 'axios';
 
 function App() {
   //State for All items
@@ -26,11 +27,15 @@ function App() {
   }
 
   React.useEffect( ()=>{
-  fetch('https://614a2ed907549f001755a83e.mockapi.io/allitems')
-    .then((res) => {return res.json();
-    })
-    .then((json) => {setItems(json);
-    });
+  // fetch('https://614a2ed907549f001755a83e.mockapi.io/allitems')
+  //   .then((res) => {return res.json();
+  //   })
+  //   .then((json) => {setItems(json);
+  //   });
+  //npm install axios instead of .fetch() to get data from mockapi backend server
+ axios.get('https://614a2ed907549f001755a83e.mockapi.io/allitems')
+ .then(response => {setItems(response.data)})
+
   },[]);
 
   const onAddToCart = (obj) => {
