@@ -89,7 +89,6 @@ function App() {
             title={item.name} 
             price={item.price} 
             img={item.img}
-            onFavorite={() => alert('Added to Favorite')}
             onPlus = {(obj) => onAddToCart(obj)}
             />
           ))}
