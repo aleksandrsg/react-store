@@ -1,9 +1,11 @@
 import React from 'react';
 import './App.css';
-import Card from './components/Card/';
 import Header from './components/Header';
 import Drawer from './components/Drawer';
 import axios from 'axios';
+import { Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Favorites from './pages/Favorites';
 
 function App() {
   //State for All items
@@ -17,6 +19,9 @@ function App() {
   const [cartIsOpened, setcartIsOpened] =React.useState(false);
 
   const [searchText, setSearchText] = React.useState(''); 
+  
+  const [favorites, setFavorites] = React.useState([]);
+
 
   const onClickCart = () => {
     setcartIsOpened(true);
@@ -51,6 +56,12 @@ function App() {
     setCartItems((prev) => prev.filter(item => item.id !== id))
   }
 
+  //Favorites
+  const onAddToFavorites = (obj) => {
+    axios.post('https://614a2ed907549f001755a83e.mockapi.io/favorites', obj)
+    setFavorites(prev =>[...prev, obj])
+  }
+
   //Set Search Text
   const onChangeSearchInput = (event) =>{
     setSearchText(event.target.value);
@@ -66,34 +77,21 @@ function App() {
         {/*Drawer or (Right side)*/}
       {cartIsOpened ? <Drawer onCloseCart={onCloseCart} cartItems={cartItems} onRemove={removeItem}/> : null}
       <Header onClickCart={onClickCart}/>
-      {/* Content*/}
-        <div className="content p-40">
-          <div className="d-flex justify-between align-center mb-40"> 
-            <h1>{searchText ? `Search request: "${searchText}"` : 'All sneakers' }</h1>
-            <div className="search-block d-flex align-center">
-              <img src="img/search.svg" alt="Search" />
-              {searchText && <img className="cu-p clear" src="img/btn-remove.svg" alt="ClearSearch" onClick={clearSearchText}/>}
-              <input onChange={onChangeSearchInput} value={searchText} type="text" placeholder="Search sneakers"/>
-            </div>
-          </div>
-          
+      <Route path ="/" exact>
+        <Home
+        items={items}
+        searchText = {searchText}
+        clearSearchText ={clearSearchText}
+        onChangeSearchInput ={onChangeSearchInput}
+        onAddToCart = {onAddToCart}
+        onAddToFavorites = {onAddToFavorites}
+        />
+      </Route>
 
-          {/* Product Cards*/ }
+      <Route path ="/favorites" exact>
+        <Favorites/>
+      </Route>
 
-          <div className="d-flex flex-wrap">
-          {items
-          .filter(item => item.name.toLowerCase().includes(searchText.toLowerCase()))
-          .map((item, index) =>(
-            <Card 
-            key={index} // if use map MAP method for items, each item should have uniq KEY
-            title={item.name} 
-            price={item.price} 
-            img={item.img}
-            onPlus = {(obj) => onAddToCart(obj)}
-            />
-          ))}
-          </div>
-        </div>
       </div>
     </div>
   );
