@@ -18,9 +18,10 @@ const Home = ({items, searchText,
           {items
           .filter(item => item.name.toLowerCase().includes(searchText.toLowerCase()))
           .map((item, index) =>(
-            <Card 
+            <Card
             key={index} // if use map MAP method for items, each item should have uniq KEY
-            title={item.name} 
+            id={item.id}
+            title={item.name}
             price={item.price} 
             img={item.img}
             onPlus = {(obj) => onAddToCart(obj)}

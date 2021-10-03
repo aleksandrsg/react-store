@@ -2,21 +2,21 @@ import React from 'react';
 
 import styles from './Card.module.scss';
 
-const Card = ({title, price, img, onPlus, onFavorites} ) =>{
+const Card = ({title, id, price, img, onPlus, onFavorites, favorited=false} ) => {
 
     const [isAdded, setIsAdded] = React.useState(false);
-    const [isFavorite, setIsFavorite]= React.useState(false);
+    const [isFavorite, setIsFavorite]= React.useState(favorited);
 
     const onClickPlus =() => {
         setIsAdded(!isAdded);
-        onPlus({title, price, img});
+        onPlus({title, price, img, id});
     }
 
     //Set state for Favorite items
     
     const onClickFavorite =()=>{
         setIsFavorite(!isFavorite);
-        onFavorites({title, price, img});
+        onFavorites({title, price, img, id});
     }
 
     return (
@@ -28,7 +28,7 @@ const Card = ({title, price, img, onPlus, onFavorites} ) =>{
             <h5>{title}</h5>
             <div className='d-flex justify-between align-center'>
                 <div className="d-flex flex-column">
-                    <span>Price:</span>
+                    <span>Price: EUR</span>
                     <b>{price}</b>
                 </div>
                 <img className={styles.plus} src={isAdded ? "/img/btn-checked.svg" : "/img/btn-plus.svg" } alt="Plus" onClick={onClickPlus}/>

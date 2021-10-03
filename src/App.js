@@ -42,6 +42,8 @@ function App() {
  .then(response => {setItems(response.data)})
  axios.get('https://614a2ed907549f001755a83e.mockapi.io/cart')
  .then(response => {setCartItems(response.data)})
+ axios.get('https://614a2ed907549f001755a83e.mockapi.io/favorites')
+ .then(response => {setFavorites(response.data)})
   },[]);
 
   // Add item to Cart and to Server
@@ -58,10 +60,14 @@ function App() {
 
   //Favorites
   const onAddToFavorites = (obj) => {
+    if(favorites.find((elem) => elem.id === obj.id)){
+    axios.delete(`https://614a2ed907549f001755a83e.mockapi.io/favorites/${obj.id}`); //delete from Backend
+    setFavorites((prev) => prev.filter(elem => elem.id !== obj.id)); // remove from State
+    } else {
     axios.post('https://614a2ed907549f001755a83e.mockapi.io/favorites', obj)
     setFavorites(prev =>[...prev, obj])
   }
-
+  };
   //Set Search Text
   const onChangeSearchInput = (event) =>{
     setSearchText(event.target.value);
@@ -76,7 +82,9 @@ function App() {
       <div className="wrapper clear">
         {/*Drawer or (Right side)*/}
       {cartIsOpened ? <Drawer onCloseCart={onCloseCart} cartItems={cartItems} onRemove={removeItem}/> : null}
+     
       <Header onClickCart={onClickCart}/>
+
       <Route path ="/" exact>
         <Home
         items={items}
@@ -89,7 +97,10 @@ function App() {
       </Route>
 
       <Route path ="/favorites" exact>
-        <Favorites/>
+        <Favorites 
+        items={favorites}
+        onAddToFavorites={onAddToFavorites}
+        />
       </Route>
 
       </div>
