@@ -31,25 +31,27 @@ function App() {
     setcartIsOpened(false);
   }
 
-  React.useEffect( ()=>{
-  // fetch('https://614a2ed907549f001755a83e.mockapi.io/allitems')
-  //   .then((res) => {return res.json();
-  //   })
-  //   .then((json) => {setItems(json);
-  //   });
-  //npm install axios instead of .fetch() to get data from mockapi backend server
- axios.get('https://614a2ed907549f001755a83e.mockapi.io/allitems')
- .then(response => {setItems(response.data)})
- axios.get('https://614a2ed907549f001755a83e.mockapi.io/cart')
- .then(response => {setCartItems(response.data)})
- axios.get('https://614a2ed907549f001755a83e.mockapi.io/favorites')
- .then(response => {setFavorites(response.data)})
+  React.useEffect( () => {
+    async function fetchData(){
+      const cartResponse = await axios.get('https://614a2ed907549f001755a83e.mockapi.io/cart');
+      const favoritesResponse = await await axios.get('https://614a2ed907549f001755a83e.mockapi.io/favorites');
+      const itemsResponse = await axios.get('https://614a2ed907549f001755a83e.mockapi.io/allitems');
+      setCartItems (cartResponse.data);
+      setFavorites (favoritesResponse.data);
+      setItems (itemsResponse.data);
+  }
+   fetchData();
   },[]);
 
-  // Add item to Cart and to Server
+  // Add item to Cart 
   const onAddToCart = (obj) => {
+    if(cartItems.find(cartitem => Number(cartitem.id) === Number(obj.id))) {
+      axios.delete(`https://614a2ed907549f001755a83e.mockapi.io/cart/${obj.id}`)
+      setCartItems( prev => prev.filter(item => Number(item.id) !== Number(obj.id)));
+    } else {
     axios.post('https://614a2ed907549f001755a83e.mockapi.io/cart', obj)
     setCartItems(prev =>[...prev, obj])
+    }
   }
 
   // Removeitem from Cart and Server
@@ -88,6 +90,7 @@ function App() {
       <Route path ="/" exact>
         <Home
         items={items}
+        cartItems = {cartItems}
         searchText = {searchText}
         clearSearchText ={clearSearchText}
         onChangeSearchInput ={onChangeSearchInput}

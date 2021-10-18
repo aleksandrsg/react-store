@@ -1,6 +1,6 @@
 import Card from '../components/Card/index';
 
-const Home = ({items, searchText, 
+const Home = ({items, cartItems, searchText, 
     clearSearchText, onChangeSearchInput, 
     onAddToCart, onAddToFavorites}) => {
     return(
@@ -26,6 +26,7 @@ const Home = ({items, searchText,
             img={item.img}
             onPlus = {(obj) => onAddToCart(obj)}
             onFavorites = {(obj) => onAddToFavorites(obj)}
+            added = {cartItems.some(obj => Number(obj.id) === Number(item.id))}
            />
           ))}
           </div>
