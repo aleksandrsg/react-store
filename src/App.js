@@ -7,6 +7,14 @@ import { Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 
+
+
+//One Global Object
+//React automaticly will informe all components if something changed in this AppContext object.
+export const AppContext = React.createContext({}); 
+
+console.log(AppContext);
+
 function App() {
   //State for All items
   const[items, setItems]= React.useState([]);
@@ -34,7 +42,7 @@ function App() {
   React.useEffect( () => {
     async function fetchData(){
       const cartResponse = await axios.get('https://614a2ed907549f001755a83e.mockapi.io/cart');
-      const favoritesResponse = await await axios.get('https://614a2ed907549f001755a83e.mockapi.io/favorites');
+      const favoritesResponse = await axios.get('https://614a2ed907549f001755a83e.mockapi.io/favorites');
       const itemsResponse = await axios.get('https://614a2ed907549f001755a83e.mockapi.io/allitems');
       setCartItems (cartResponse.data);
       setFavorites (favoritesResponse.data);
@@ -80,6 +88,7 @@ function App() {
   }
   
   return (
+    <AppContext.Provider value ={{items, cartItems, favorites}}>
     <div className="App">
       <div className="wrapper clear">
         {/*Drawer or (Right side)*/}
@@ -100,14 +109,14 @@ function App() {
       </Route>
 
       <Route path ="/favorites" exact>
-        <Favorites 
-        items={favorites}
+        <Favorites
         onAddToFavorites={onAddToFavorites}
         />
       </Route>
 
       </div>
     </div>
+    </AppContext.Provider>
   );
 }
 
