@@ -2,9 +2,9 @@ import React from 'react';
 import Card from '../components/Card/index';
 import { AppContext } from '../App';
 
-const Favorites = ({onAddToFavorites}) => {
+const Favorites = () => {
 
-    const state = React.useContext(AppContext);
+    const { onAddToFavorites, favorites } = React.useContext(AppContext);
 
     return (
         <div className="content p-40">
@@ -12,7 +12,7 @@ const Favorites = ({onAddToFavorites}) => {
         <h1>Your Favorite Sneakers</h1>
         </div>
         <div className="d-flex flex-wrap">
-        {state.favorites
+        {favorites
           .map((item, index) =>(
             <Card 
             key={index} // if use map MAP method for items, each item should have uniq KEY

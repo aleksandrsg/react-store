@@ -86,9 +86,15 @@ function App() {
   const clearSearchText = () => {
     setSearchText('');
   }
+
+  //if Product is in the Cart then show checked on Home page for that Product
+
+  const isItemAdded = (id) => {
+    return cartItems.some((obj) => Number(obj.id) === Number(id));
+  }
   
   return (
-    <AppContext.Provider value ={{items, cartItems, favorites}}>
+    <AppContext.Provider value ={{items, cartItems, favorites, onAddToFavorites, isItemAdded}}>
     <div className="App">
       <div className="wrapper clear">
         {/*Drawer or (Right side)*/}
@@ -109,9 +115,7 @@ function App() {
       </Route>
 
       <Route path ="/favorites" exact>
-        <Favorites
-        onAddToFavorites={onAddToFavorites}
-        />
+        <Favorites />
       </Route>
 
       </div>

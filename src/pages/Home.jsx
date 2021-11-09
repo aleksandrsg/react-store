@@ -1,8 +1,12 @@
-import Card from '../components/Card/index';
 
-const Home = ({items, cartItems, searchText, 
+import React from 'react';
+import Card from '../components/Card/index';
+//import { AppContext } from '../App';
+
+const Home = ({items, searchText, 
     clearSearchText, onChangeSearchInput, 
     onAddToCart, onAddToFavorites}) => {
+    //const { isItemAdded } = React.useContext(AppContext);
     return(
         <div className="content p-40">
           <div className="d-flex justify-between align-center mb-40"> 
@@ -26,7 +30,7 @@ const Home = ({items, cartItems, searchText,
             img={item.img}
             onPlus = {(obj) => onAddToCart(obj)}
             onFavorites = {(obj) => onAddToFavorites(obj)}
-            added = {cartItems.some(obj => Number(obj.id) === Number(item.id))}
+            //added = {isItemAdded(item.id)}
            />
           ))}
           </div>
