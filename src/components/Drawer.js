@@ -1,4 +1,5 @@
 import React from 'react';
+import Info from './info';
 
 const Drawer = ({ onCloseCart, cartItems = [], onRemove}) =>{
   return(
@@ -13,7 +14,7 @@ const Drawer = ({ onCloseCart, cartItems = [], onRemove}) =>{
 
               {cartItems.length > 0 ? (
 
-              <div>
+              <div className="d-flex flex-column flex">
               <div className="items">
                 {cartItems.map(obj => (
                   <div className="cartItem d-flex align-center justify-between mb-20">
@@ -49,16 +50,12 @@ const Drawer = ({ onCloseCart, cartItems = [], onRemove}) =>{
               </div>
 
               ) : (
-
-              <div class="cartEmpty d-flex align-center justify-center flex-column flex">
-                <img class="mb-20" width="120px" height="120px" src="/img/empty-cart.jpg" alt="Empty" />
-                <h2>Cart is Empty</h2>
-                <p class="opacity-6">Please add items</p>
-                <button class="greenButton">
-                  <img src="/img/arrow.svg" alt="Arrow" />
-                  Back
-                </button>
-              </div>
+                <Info 
+                  title = "Cart is empty"
+                  description ="Please add at least one product"
+                  image = "/img/empty-cart.jpg"
+                />
+              
               )}
 
           </div>
