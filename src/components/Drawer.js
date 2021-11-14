@@ -1,7 +1,29 @@
 import React from 'react';
 import Info from './info';
+import { AppContext } from '../App';
 
-const Drawer = ({ onCloseCart, cartItems = [], onRemove}) =>{
+import axios from 'axios';
+
+const Drawer = ({ onCloseCart, onRemove}) =>{
+
+  const { cartItems, setCartItems} = React.useContext(AppContext);
+  const [isOrderComplete, setIsOrderComplete] = React.useState(false);
+  const [orderId, setOrderId] = React.useState(null);
+
+  const onClickComplete = async () => {
+    try {
+      const { data } = await axios.post('https://614a2ed907549f001755a83e.mockapi.io/orders', {
+        items: cartItems, 
+      });
+      setOrderId (data.id)
+      setIsOrderComplete(true);
+      setCartItems([]);
+      axios.put('https://614a2ed907549f001755a83e.mockapi.io/cart', [])
+    } catch (error) {
+        alert("Unable to create your Order");
+    }
+  };
+
   return(
         <div className="overlay">
 
@@ -44,16 +66,18 @@ const Drawer = ({ onCloseCart, cartItems = [], onRemove}) =>{
                       <b>EUR 2.00</b>
                     </li>
                 </ul>
-                <button className='greenButton'>Complete Order <img src="img/arrow.svg" alt="arrow" /></button>
+                <button className='greenButton' onClick ={onClickComplete}>
+                  Complete Order 
+                  <img src="img/arrow.svg" alt="arrow" /></button>
               </div>
               </div>
               </div>
 
               ) : (
                 <Info 
-                  title = "Cart is empty"
-                  description ="Please add at least one product"
-                  image = "/img/empty-cart.jpg"
+                  title = {isOrderComplete ? "OrderCompleted" : "Cart is empty"}
+                  description ={isOrderComplete ? `Your Order {orderId} successfully Completed ` : "Please add at least one product"}
+                  image = {isOrderComplete ? "/img/complete-order.jpg" : "/img/empty-cart.jpg"}
                 />
               
               )}

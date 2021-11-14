@@ -94,7 +94,7 @@ function App() {
   }
   
   return (
-    <AppContext.Provider value ={{items, cartItems, favorites, onAddToFavorites, isItemAdded, setcartIsOpened}}>
+    <AppContext.Provider value ={{items, cartItems, favorites, onAddToFavorites, isItemAdded, setcartIsOpened, setCartItems }}>
     <div className="App">
       <div className="wrapper clear">
         {/*Drawer or (Right side)*/}

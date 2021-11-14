@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { AppContext } from '../App';
 
 const Info = ( {title, description, image} ) => {
 
-    const {setcartIsOpened} = useContext(AppContext);
+    const {setcartIsOpened} = React.useContext(AppContext);
 
     return (
         <div class="cartEmpty d-flex align-center justify-center flex-column flex">
